@@ -54,8 +54,8 @@
         /* Mobile Content Order */
         .title-block { order: 1; }
         .content-area { order: 2; }
-        .contact-info { order: 3; } /* New section order */
-        .detail-panels-wrapper { order: 4; } 
+        /* Removed contact-info */
+        .detail-panels-wrapper { order: 3; } 
 
         /* Title Block and Profile */
         .title-block {
@@ -85,7 +85,7 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         /* =================================
            III. NAVIGATION AND DESCRIPTION
            ================================= */
@@ -127,34 +127,7 @@
         }
 
         /* =================================
-           IV. NEW CONTACT INFO SECTION
-           ================================= */
-        .contact-info {
-            padding: 10px 0;
-            border-top: 1px dashed rgba(255, 255, 255, 0.3);
-            font-size: 0.9em;
-            text-align: left;
-        }
-        .contact-info p {
-            margin: 5px 0;
-            display: flex;
-            justify-content: space-between;
-        }
-        .contact-info strong {
-            color: var(--color-accent);
-            margin-right: 10px;
-        }
-        .contact-info a {
-            color: var(--color-text);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .contact-info a:hover {
-            color: var(--color-accent);
-        }
-
-        /* =================================
-           V. CSS-ONLY TOGGLE (The Sibling Trick)
+           IV. CSS-ONLY TOGGLE (The Sibling Trick)
            ================================= */
         .detail-panels-wrapper {
             grid-column: 1 / 3;
@@ -214,9 +187,37 @@
             color: var(--color-accent);
         }
 
+        /* Styling for the embedded contact list within the About Me panel */
+        .contact-details-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.3);
+            padding-top: 10px;
+        }
+        .contact-details-list li {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .contact-details-list strong {
+            color: var(--color-accent);
+            margin-right: 10px;
+            flex-basis: 30%;
+        }
+        .contact-details-list a {
+            color: var(--color-text);
+            text-decoration: none;
+            transition: color 0.2s;
+            text-align: right;
+        }
+        .contact-details-list a:hover {
+            color: var(--color-accent);
+        }
+
 
         /* =================================
-           VI. GALLERY & LIGHTBOX (Same as before)
+           V. GALLERY & LIGHTBOX (Same as before)
            ================================= */
         .gallery {
             display: grid;
@@ -233,18 +234,13 @@
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        .gallery-item img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(0, 188, 212, 0.7);
-        }
-        /* Lightbox styles ... */
-        .lightbox-target { display: none; /* ... (Lightbox styles omitted for brevity) ... */ }
+        .lightbox-target { display: none; }
         .lightbox-target:target { display: flex; }
         .lightbox-close { top: 10px; right: 20px; font-size: 2.5em; color: var(--color-accent); }
 
 
         /* =================================
-           VII. DESKTOP/TABLET OVERRIDE (min-width: 768px)
+           VI. DESKTOP/TABLET OVERRIDE (min-width: 768px)
            ================================= */
         @media (min-width: 768px) {
             .drawing-sheet {
@@ -253,34 +249,16 @@
                 grid-template-columns: 1fr 2fr;
                 gap: 20px;
             }
-            .title-block {
-                grid-column: 1 / 2;
-                order: initial;
-            }
-            .content-area {
-                grid-column: 2 / 3;
-                order: initial;
-            }
-            .contact-info {
-                grid-column: 2 / 3; /* Aligns with content on desktop */
-                order: initial;
-                border-top: none;
-            }
+            .title-block { grid-column: 1 / 2; order: initial; }
+            .content-area { grid-column: 2 / 3; order: initial; }
             .detail-panels-wrapper {
                 grid-column: 1 / 3;
                 order: initial;
                 padding-top: 20px;
                 border-top: 1px dashed rgba(255, 255, 255, 0.3);
             }
-            .contact-actions {
-                justify-content: flex-start;
-                flex-wrap: nowrap;
-            }
-            .contact-actions a {
-                flex: 0 1 auto;
-                max-width: 120px;
-                padding: 10px 15px;
-            }
+            .contact-actions { justify-content: flex-start; flex-wrap: nowrap; }
+            .contact-actions a { flex: 0 1 auto; max-width: 120px; padding: 10px 15px; }
         }
     </style>
 </head>
@@ -306,12 +284,6 @@
 
         </div>
         
-        <div class="contact-info">
-            <p><strong>LOCATION:</strong> Denver, CO</p>
-            <p><strong>EMAIL:</strong> <a href="mailto:heather.rosenau@example.com">heather.rosenau@example.com</a></p>
-            <p><strong>PHONE:</strong> (555) 123‑4567</p>
-        </div>
-
         <div class="detail-panels-wrapper">
             <div id="projects" class="hidden-section">
                 <h2>Project Drawings & Models</h2>
@@ -336,6 +308,12 @@
                 <p><strong>KEY SKILLS:</strong> Precision drafting, parametric modeling, GD&T application, clash detection, BIM coordination.</p>
                 <p><strong>SOFTWARE SUITE:</strong> **AutoCAD**, **SolidWorks**, **Revit**, Inventor, Rhino 3D.</p>
                 <p><strong>EXPERIENCE:</strong> 5+ years supporting mechanical engineering and industrial design teams in Denver, CO.</p>
+                
+                <ul class="contact-details-list">
+                    <li><strong>LOCATION:</strong> Denver, CO</li>
+                    <li><strong>EMAIL:</strong> <a href="mailto:heather.rosenau@example.com">heather.rosenau@example.com</a></li>
+                    <li><strong>PHONE:</strong> (555) 123‑4567</li>
+                </ul>
             </div>
         </div>
     </div>
