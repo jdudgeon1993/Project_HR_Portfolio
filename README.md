@@ -1,391 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heather Rosenau | CAD Designer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    /* Global and background (Kept) */
-body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: #0a2a43; /* blueprint blue */
-  background-image:
-    linear-gradient(135deg, rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(45deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  color: #fdfdfd;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* Changed to min-height for better content fit */
-  margin: 0;
-  padding: 20px; /* Added padding for small screens */
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heather Rosenau | CAD Specification Sheet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* =================================
+           I. GLOBAL & THEME
+           ================================= */
+        :root {
+            --color-bg: #0d273f; /* Deep Blueprint Blue */
+            --color-card: #1f3d57; /* Dark Panel Blue */
+            --color-accent: #00bcd4; /* Cyan/Aqua Accent */
+            --color-text: #f0f0f0; /* Off-White Text */
+            --font-main: 'Roboto Mono', monospace;
+            --font-heading: 'Orbitron', sans-serif;
+        }
 
-/* Card - Slimmed down for business card feel */
-.card {
-  position: relative;
-  background: #2c3e50; /* steel gray */
-  border: 2px solid #00bcd4; /* cyan accent border */
-  border-radius: 10px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-  padding: 30px; /* Reduced padding */
-  text-align: center;
-  max-width: 500px; /* Reduced max-width for a more compact card */
-  overflow: hidden;
-  animation: float 4s ease-in-out infinite;
-  width: 90%; /* Responsive width */
-}
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            /* Subtle grid background for drafting feel */
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); } /* Reduced float distance */
-  100% { transform: translateY(0px); }
-}
+        /* =================================
+           II. MAIN CARD LAYOUT
+           ================================= */
+        .drawing-sheet {
+            background: var(--color-card);
+            border: 3px solid var(--color-accent); /* Stronger Border */
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        /* Profile picture and Title Block styles remain the same for brevity */
+        .title-block {
+            text-align: center;
+        }
 
-/* Profile picture and CAD-style frame (Kept, but slightly smaller) */
-.profile-wrapper {
-  position: relative;
-  display: inline-block;
-  margin: 0 auto 15px auto;
-}
-.profile-pic {
-  width: 100px; /* Reduced size */
-  height: 100px; /* Reduced size */
-  border-radius: 50%;
-  border: 3px solid #00bcd4;
-  display: block;
-  transition: box-shadow 0.3s ease;
-}
-.profile-pic:hover {
-  box-shadow: 0 0 10px rgba(0,188,212,0.7);
-}
-.profile-wrapper::before,
-.profile-wrapper::after {
-  content: "";
-  position: absolute;
-  width: 25px; /* Reduced size */
-  height: 25px; /* Reduced size */
-  border: 2px solid rgba(0,188,212,0.4);
-}
-.profile-wrapper::before {
-  top: -8px;
-  left: -8px;
-  border-right: none;
-  border-bottom: none;
-}
-.profile-wrapper::after {
-  bottom: -8px;
-  right: -8px;
-  border-left: none;
-  border-top: none;
-}
+        .title-block h1 {
+            font-family: var(--font-heading);
+            font-size: 2.2em;
+            color: var(--color-accent);
+            margin: 0 0 5px 0;
+            line-height: 1;
+            text-transform: uppercase;
+        }
 
-/* Typography */
-.card h1 {
-  margin: 0 0 5px 0; /* Reduced margin */
-  font-size: 1.8em; /* Reduced size */
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  color: #00bcd4;
-}
-.card p {
-  margin: 5px 0 15px 0; /* Reduced margin */
-  font-size: 1em; /* Reduced size */
-  color: #fdfdfd;
-}
-hr {
-  border: 0;
-  border-top: 1px solid rgba(0,188,212,0.3);
-  margin: 15px 0;
-}
+        .title-block .job-title {
+            font-size: 1em;
+            color: var(--color-text);
+            margin-bottom: 20px;
+        }
 
-/* Navigation buttons: Centered and simplified */
-.contact {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px; /* Reduced gap */
-  margin-top: 10px; /* Reduced margin */
-}
-.contact a {
-  flex: 1 1 auto; /* Allow buttons to grow/shrink equally */
-  max-width: 120px; /* Set a max width for buttons */
-  display: inline-block;
-  padding: 8px 15px; /* Reduced padding */
-  background: #00bcd4;
-  color: #0a2a43;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 0.85em; /* Reduced font size */
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  font-weight: 700; /* Made buttons bolder */
-}
-.contact a:hover {
-  background: #0097a7;
-  transform: scale(1.05);
-}
-.contact a.active {
-  background: #9b59b6;
-  color: #fff;
-}
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--color-accent);
+            box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-/* Expandable sections (Kept) */
-.hidden-section {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
-  margin-top: 15px; /* Reduced margin */
-  text-align: left;
-  opacity: 0;
-}
-.hidden-section.open {
-  max-height: 1000px;
-  opacity: 1;
-  transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
-}
-.hidden-section h2 {
-  font-size: 1.1em; /* Reduced size */
-  color: #00bcd4;
-  font-family: 'Orbitron', sans-serif;
-  margin-top: 0; /* Important for alignment */
-}
-.hidden-section p, .hidden-section ul {
-  color: #fdfdfd;
-  font-size: 0.95em; /* Reduced size */
-}
-.hidden-section ul {
-  list-style: none; /* Removed default list style */
-  padding-left: 0;
-}
+        /* Spec Box - Contact Info */
+        .spec-box {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.1);
+            text-align: left;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+        .spec-box p {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .spec-box strong {
+            color: var(--color-accent);
+            margin-right: 10px;
+        }
+        .spec-box a {
+            color: var(--color-text);
+            text-decoration: none;
+        }
+        .spec-box a:hover {
+            color: var(--color-accent);
+        }
 
-/* Portfolio gallery (Kept but smaller) */
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* Center images on mobile */
-  gap: 8px; /* Reduced gap */
-  margin-top: 10px;
-}
-.gallery img {
-  width: 80px; /* Reduced size */
-  height: 80px; /* Reduced size */
-  object-fit: cover;
-  border: 2px solid #00bcd4;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-.gallery img:hover {
-  transform: scale(1.1);
-}
-/* Removed expanded-img section to force use of lightbox */
+        /* Responsive grid for larger screens */
+        @media (min-width: 768px) {
+            .drawing-sheet {
+                grid-template-columns: 1fr 2fr;
+                padding: 30px;
+            }
+            .title-block {
+                grid-column: 1 / 2;
+            }
+            .content-area {
+                grid-column: 2 / 3;
+            }
+            .detail-panels-wrapper {
+                grid-column: 1 / 3; /* Spans both columns at the bottom */
+            }
+        }
+        
+        /* =================================
+           III. RADIO BUTTON HACK FOR TOGGLING
+           ================================= */
+        
+        /* 1. Hide the actual radio inputs */
+        .toggle-input {
+            display: none;
+        }
 
-/* Lightbox overlay (Kept) */
-#lightbox {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(10,42,67,0.9); /* Darker background */
-  backdrop-filter: blur(8px); /* Stronger blur */
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-#lightbox-content {
-  position: relative;
-  text-align: center;
-  max-width: 90%;
-}
-#lightbox img {
-  max-width: 100%; /* Better full-screen fit */
-  max-height: 85vh; /* Limit height */
-  border: 4px solid #00bcd4;
-  border-radius: 10px;
-  box-shadow: 0 0 25px rgba(0,188,212,0.7);
-}
-/* Arrows */
-.arrow {
-  font-size: 2.5em; /* Larger arrows */
-  color: #00bcd4;
-}
+        /* 2. Style the <label> (which is linked to the radio) to look like a button */
+        .contact-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
 
-/* Divider (desktop only) and responsive layout - Simplified */
-@media (min-width: 600px) { /* Reduced breakpoint for earlier desktop view */
-  .card {
-    display: flex;
-    align-items: flex-start;
-    text-align: left;
-  }
-  .profile-wrapper {
-    margin: 0 20px 0 0; 
-  }
-  .card-content {
-    flex: 1;
-    padding-left: 20px; 
-  }
-  .divider {
-    width: 1px; /* Thinner divider */
-    background: rgba(0,188,212,0.4);
-    margin: 0 15px; /* Less margin */
-    height: 100%;
-  }
-  .contact {
-    justify-content: flex-start; /* Align buttons to the left on desktop */
-  }
-  .contact a {
-    flex: 0 1 auto; /* Natural size on desktop */
-    max-width: none;
-  }
-}
-  </style>
+        .contact-actions label {
+            padding: 10px 15px;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: background 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            cursor: pointer;
+            flex-grow: 1;
+            text-align: center;
+            max-width: 120px;
+        }
+        .contact-actions a { /* LinkedIn button remains standard anchor */
+            padding: 10px 15px;
+            background: #2980b9; /* Slightly different color for non-toggle */
+            color: var(--color-text);
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: background 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            flex-grow: 1;
+            text-align: center;
+            max-width: 120px;
+        }
+        .contact-actions label:hover,
+        .contact-actions a:hover {
+            background: #0097a7;
+            transform: translateY(-2px);
+            color: var(--color-bg);
+        }
+        .contact-actions a:hover {
+            background: #3498db;
+        }
+
+
+        /* 3. Style the label when the linked radio button is CHECKED (Active State) */
+        #radio-projects:checked ~ .contact-actions label[for="radio-projects"],
+        #radio-about:checked ~ .contact-actions label[for="radio-about"] {
+            background: #9b59b6; /* Purple active color */
+            color: var(--color-text);
+        }
+        
+        /* 4. Hide all sections by default */
+        .hidden-section {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            text-align: left;
+            border-top: 1px dashed rgba(255, 255, 255, 0.3);
+            margin-top: 15px;
+            padding-top: 0;
+            box-sizing: border-box;
+        }
+
+        /* 5. Show the section only if its corresponding radio is checked */
+        /* Use the General Sibling Combinator (~) to find the section next to the radio input */
+        
+        #radio-projects:checked ~ .detail-panels-wrapper #projects,
+        #radio-about:checked ~ .detail-panels-wrapper #about {
+            max-height: 1000px;
+            opacity: 1;
+            transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
+            padding-top: 15px;
+        }
+        
+        /* Floating Appearance (Apply to the content of the panels) */
+        .hidden-section h2 {
+            font-family: var(--font-heading);
+            font-size: 1.2em;
+            color: var(--color-accent);
+            border-bottom: 1px solid var(--color-accent);
+            padding-bottom: 5px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .hidden-section p strong {
+            color: var(--color-accent);
+        }
+        
+        /* Floating Reset: Hide the border/padding when closed */
+        .hidden-section:not([style*="max-height: 1000px"]) {
+             border-top: none;
+        }
+        
+
+        /* =================================
+           IV. GALLERY & LIGHTBOX (CSS-Only) - Not modified from last version
+           ================================= */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid var(--color-accent);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(0, 188, 212, 0.7);
+        }
+
+        /* Lightbox - Hidden by default */
+        .lightbox-target {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(13, 39, 63, 0.95);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .lightbox-target:target {
+            display: flex;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            text-align: center;
+        }
+        .lightbox-content img {
+            max-width: 90vw;
+            max-height: 80vh;
+            border: 5px solid var(--color-accent);
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(0, 188, 212, 0.8);
+        }
+        .lightbox-content .caption {
+            margin-top: 10px;
+            color: var(--color-text);
+            font-style: italic;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--color-accent);
+            font-size: 3.5em;
+            text-decoration: none;
+            font-weight: 300;
+            opacity: 0.9;
+            transition: color 0.2s;
+        }
+        .lightbox-close:hover {
+            color: #9b59b6;
+        }
+
+        /* Responsive grid for smaller screens */
+        @media (max-width: 767px) {
+            .contact-actions {
+                flex-wrap: wrap;
+            }
+            .contact-actions label, .contact-actions a {
+                flex-grow: 1;
+                max-width: 48%; /* Adjust for spacing */
+            }
+        }
+    </style>
 </head>
 <body>
-   <div id="lightbox" onclick="closeLightbox(event)">
-  <div id="lightbox-content">
-    <span id="arrow-left" class="arrow" onclick="prevImage(event)">&#10094;</span>
-    <img id="lightbox-img" src="" alt="">
-    <span id="arrow-right" class="arrow" onclick="nextImage(event)">&#10095;</span>
-    <p id="lightbox-caption"></p>
-  </div>
-</div>
+    <div class="drawing-sheet">
 
-  <div class="card">
-        <div class="profile-wrapper">
-      <img src="profile.jpg" alt="Heather Rosenau" class="profile-pic">
-    </div>
+        <input type="radio" id="radio-projects" name="view-toggle" class="toggle-input">
+        <input type="radio" id="radio-about" name="view-toggle" class="toggle-input">
+        
+        <div class="title-block">
+            <img src="profile.jpg" alt="Heather Rosenau" class="profile-pic">
+            <h1>Heather Rosenau</h1>
+            <p class="job-title">CAD Designer & Model Specialist</p>
 
-        <div class="divider"></div>
+            <div class="spec-box">
+                <p><strong>REVISION:</strong> 1.5</p>
+                <p><strong>DATE:</strong> 2025/11/29</p>
+                <p><strong>LOCATION:</strong> Denver, CO</p>
+                <p><strong><a href="mailto:heather.rosenau@example.com">EMAIL</a>:</strong> heather.rosenau@example.com</p>
+                <p><strong>PHONE:</strong> (555) 123‑4567</p>
+            </div>
+        </div>
 
-        <div class="card-content">
-      <h1>Heather Rosenau</h1>
-      <p>CAD Designer</p>
-      <hr>
-      <div class="contact">
-  <a href="https://linkedin.com/in/heatherrosenau" target="_blank">LinkedIn</a>
-  <a id="projectsBtn" onclick="toggleSection('projects', 'projectsBtn')">Projects</a>
-  <a id="aboutBtn" onclick="toggleSection('about', 'aboutBtn')">About</a>
-  <a id="contactBtn" onclick="toggleSection('contactInfo', 'contactBtn')">Contact</a> </div>
+        <div class="content-area">
 
-            <div id="projects" class="hidden-section">
-        <h2>Portfolio Samples</h2>
-        <div class="gallery">
-          <img src="project1.jpg" alt="Precision Gear Design - AutoCAD" onclick="expandImage(this)">
-          <img src="project2.jpg" alt="3D Model Render - SolidWorks" onclick="expandImage(this)">
-          <img src="project3.jpg" alt="Architectural Floor Plan - Revit" onclick="expandImage(this)">
-          <img src="project4.jpg" alt="Detailed Assembly View - Inventor" onclick="expandImage(this)">
-        </div>
-      </div>
+            <div class="contact-actions">
+                <a href="https://linkedin.com/in/heatherrosenau" target="_blank">LinkedIn</a>
+                
+                <label for="radio-projects">Projects</label>
+                <label for="radio-about">About Me</label>
+                
+                <label for="close-view" style="background: none; border: 1px dashed rgba(0, 188, 212, 0.5); color: var(--color-accent); flex-grow: 0; max-width: 80px;">CLOSE</label>
+            </div>
+            
+            <p>I am a highly detail-oriented **CAD professional** specializing in the transformation of conceptual designs into production-ready technical drawings and 3D models. My work ensures accuracy and manufacturability across diverse engineering and architectural domains.</p>
 
-            <div id="about" class="hidden-section">
-        <h2>About Heather</h2>
-        <p><strong>Specializing in precision drafting and 3D modeling.</strong> I bridge the gap between concept and fabrication, providing accurate technical documentation for engineering and architectural projects. Proficient in AutoCAD, SolidWorks, and Revit.</p>
-      </div>
-      <div id="contactInfo" class="hidden-section">
-  <h2>Get in Touch</h2>
-  <ul>
-    <li>**Email:** <a href="mailto:heather.rosenau@example.com">heather.rosenau@example.com</a></li>
-    <li>**Phone:** (555) 123‑4567</li>
-    <li>**Location:** Denver, CO</li>
-  </ul>
-</div>
-    </div>
-  </div>
+        </div>
+        
+        <div class="detail-panels-wrapper">
+            <div id="projects" class="hidden-section">
+                <h2>Project Drawings & Models</h2>
+                <div class="gallery">
+                    <a href="#lb1" class="gallery-item">
+                        <img src="project1.jpg" alt="Precision Gear Design - AutoCAD">
+                    </a>
+                    <a href="#lb2" class="gallery-item">
+                        <img src="project2.jpg" alt="3D Model Render - SolidWorks">
+                    </a>
+                    <a href="#lb3" class="gallery-item">
+                        <img src="project3.jpg" alt="Architectural Floor Plan - Revit">
+                    </a>
+                    <a href="#lb4" class="gallery-item">
+                        <img src="project4.jpg" alt="Detailed Assembly View - Inventor">
+                    </a>
+                </div>
+            </div>
 
- <script>
-  let currentIndex = 0;
-  let galleryImages = [];
+            <div id="about" class="hidden-section">
+                <h2>Technical Specification</h2>
+                <p><strong>KEY SKILLS:</strong> Precision drafting, parametric modeling, GD&T application, clash detection, BIM coordination.</p>
+                <p><strong>SOFTWARE SUITE:</strong> **AutoCAD**, **SolidWorks**, **Revit**, Inventor, Rhino 3D.</p>
+                <p><strong>EXPERIENCE:</strong> 5+ years supporting mechanical engineering and industrial design teams in Denver, CO.</p>
+            </div>
+        </div>
+    </div>
 
-  function toggleSection(sectionId, btnId) {
-    const sections = document.querySelectorAll('.hidden-section');
-    const buttons = document.querySelectorAll('.contact a');
-    const section = document.getElementById(sectionId);
-    const button = document.getElementById(btnId);
+    <div id="lb1" class="lightbox-target">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close" title="Close">&times;</a>
+            <img src="project1.jpg" alt="Precision Gear Design - AutoCAD">
+            <p class="caption">Precision Gear Design - AutoCAD</p>
+        </div>
+    </div>
 
-    // If the target section is already open, close it.
-    if (section.classList.contains('open')) {
-      section.classList.remove('open');
-      button.classList.remove('active');
-      return; // Exit function
-    }
+    <div id="lb2" class="lightbox-target">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close" title="Close">&times;</a>
+            <img src="project2.jpg" alt="3D Model Render - SolidWorks">
+            <p class="caption">3D Model Render - SolidWorks</p>
+        </div>
+    </div>
 
-    // Close all other sections and remove active class from all buttons
-    sections.forEach(sec => sec.classList.remove('open'));
-    buttons.forEach(btn => btn.classList.remove('active'));
+    <div id="lb3" class="lightbox-target">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close" title="Close">&times;</a>
+            <img src="project3.jpg" alt="Architectural Floor Plan - Revit">
+            <p class="caption">Architectural Floor Plan - Revit</p>
+        </div>
+    </div>
 
-    // Open the target section and set button active
-    section.classList.add('open');
-    button.classList.add('active');
-  }
-
-  function expandImage(img) {
-    // Close all sections when opening the lightbox (for a cleaner look)
-    document.querySelectorAll('.hidden-section').forEach(sec => sec.classList.remove('open'));
-    document.querySelectorAll('.contact a').forEach(btn => btn.classList.remove('active'));
-
-
-    galleryImages = Array.from(document.querySelectorAll('.gallery img'));
-    currentIndex = galleryImages.indexOf(img);
-
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxCaption = document.getElementById('lightbox-caption');
-
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    // Use the alt text as the caption
-    lightboxCaption.textContent = img.alt;
-
-    lightbox.style.display = 'flex';
-  }
-
-  function closeLightbox(event) {
-    // Only close if the click is on the lightbox background, not the content or arrows
-    if (event && event.target.id === 'lightbox') {
-      document.getElementById('lightbox').style.display = 'none';
-    } else if (!event) { // For keyboard 'Escape' key
-      document.getElementById('lightbox').style.display = 'none';
-    }
-  }
-
-  function prevImage(event) {
-    if (event) event.stopPropagation();
-    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-    showImage();
-  }
-
-  function nextImage(event) {
-    if (event) event.stopPropagation();
-    currentIndex = (currentIndex + 1) % galleryImages.length;
-    showImage();
-  }
-
-  function showImage() {
-    const img = galleryImages[currentIndex];
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxCaption = document.getElementById('lightbox-caption');
-
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    lightboxCaption.textContent = img.alt;
-  }
-
-  // Keyboard navigation (Kept)
-  document.addEventListener('keydown', function(e) {
-    const lightbox = document.getElementById('lightbox');
-    if (lightbox.style.display === 'flex') {
-      if (e.key === 'ArrowLeft') {
-        prevImage();
-      } else if (e.key === 'ArrowRight') {
-        nextImage();
-      } else if (e.key === 'Escape') {
-        closeLightbox();
-      }
-    }
-  });
-</script>
+    <div id="lb4" class="lightbox-target">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close" title="Close">&times;</a>
+            <img src="project4.jpg" alt="Detailed Assembly View - Inventor">
+            <p class="caption">Detailed Assembly View - Inventor</p>
+        </div>
+    </div>
 </body>
 </html>
