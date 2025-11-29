@@ -39,6 +39,7 @@
            II. MAIN CARD LAYOUT
            ================================= */
         .drawing-sheet {
+            position: relative; /* Context for floating sections */
             background: var(--color-card);
             border: 3px solid var(--color-accent); /* Stronger Border */
             border-radius: 5px;
@@ -51,11 +52,10 @@
             gap: 20px;
         }
         
-        /* Profile picture and Title Block styles remain the same for brevity */
+        /* Profile picture, H1, Job Title, and Spec Box styles remain the same for brevity */
         .title-block {
             text-align: center;
         }
-
         .title-block h1 {
             font-family: var(--font-heading);
             font-size: 2.2em;
@@ -64,13 +64,11 @@
             line-height: 1;
             text-transform: uppercase;
         }
-
         .title-block .job-title {
             font-size: 1em;
             color: var(--color-text);
             margin-bottom: 20px;
         }
-
         .profile-pic {
             width: 120px;
             height: 120px;
@@ -82,8 +80,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-
-        /* Spec Box - Contact Info */
         .spec-box {
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 15px;
@@ -122,29 +118,29 @@
             .content-area {
                 grid-column: 2 / 3;
             }
+            .nav-and-content-wrapper { /* Contains both nav/desc and panels */
+                grid-column: 1 / 3;
+                display: contents; /* Allows children to flow into the sheet grid */
+            }
             .detail-panels-wrapper {
-                grid-column: 1 / 3; /* Spans both columns at the bottom */
+                grid-column: 1 / 3;
             }
         }
-        
-        /* =================================
-           III. RADIO BUTTON HACK FOR TOGGLING
-           ================================= */
-        
-        /* 1. Hide the actual radio inputs */
-        .toggle-input {
-            display: none;
-        }
 
-        /* 2. Style the <label> (which is linked to the radio) to look like a button */
+        /* =================================
+           III. NAVIGATION AND BUTTONS
+           ================================= */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+        }
         .contact-actions {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             justify-content: center;
         }
-
-        .contact-actions label {
+        .contact-actions a {
             padding: 10px 15px;
             background: var(--color-accent);
             color: var(--color-bg);
@@ -154,68 +150,74 @@
             font-size: 0.9em;
             transition: background 0.3s, transform 0.2s;
             text-transform: uppercase;
-            cursor: pointer;
             flex-grow: 1;
             text-align: center;
             max-width: 120px;
         }
-        .contact-actions a { /* LinkedIn button remains standard anchor */
-            padding: 10px 15px;
-            background: #2980b9; /* Slightly different color for non-toggle */
-            color: var(--color-text);
-            text-decoration: none;
-            border-radius: 3px;
-            font-weight: 700;
-            font-size: 0.9em;
-            transition: background 0.3s, transform 0.2s;
-            text-transform: uppercase;
-            flex-grow: 1;
-            text-align: center;
-            max-width: 120px;
-        }
-        .contact-actions label:hover,
         .contact-actions a:hover {
             background: #0097a7;
             transform: translateY(-2px);
-            color: var(--color-bg);
-        }
-        .contact-actions a:hover {
-            background: #3498db;
         }
 
-
-        /* 3. Style the label when the linked radio button is CHECKED (Active State) */
-        #radio-projects:checked ~ .contact-actions label[for="radio-projects"],
-        #radio-about:checked ~ .contact-actions label[for="radio-about"] {
-            background: #9b59b6; /* Purple active color */
+        /* Active state for navigation (Focus/Active on the button itself) */
+        .contact-actions a:focus,
+        .contact-actions a:active {
+            background: #9b59b6; 
             color: var(--color-text);
         }
         
-        /* 4. Hide all sections by default */
+        /* =================================
+           IV. CSS-ONLY TOGGLE (The Sibling Trick)
+           ================================= */
+        .detail-panels-wrapper {
+            /* This is the container for the elements that will be targeted */
+            grid-column: 1 / 3;
+            /* Ensures panels are below the main grid content */
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+
         .hidden-section {
+            /* Initial Hidden State */
             max-height: 0;
             overflow: hidden;
             opacity: 0;
+            padding: 0 15px; /* Padding for the content inside */
+            margin-bottom: 0;
             transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
             text-align: left;
-            border-top: 1px dashed rgba(255, 255, 255, 0.3);
-            margin-top: 15px;
-            padding-top: 0;
-            box-sizing: border-box;
+            
+            /* Apply the floating/panel style to the section */
+            background: var(--color-card);
+            border: 1px solid var(--color-accent);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
         }
 
-        /* 5. Show the section only if its corresponding radio is checked */
-        /* Use the General Sibling Combinator (~) to find the section next to the radio input */
-        
-        #radio-projects:checked ~ .detail-panels-wrapper #projects,
-        #radio-about:checked ~ .detail-panels-wrapper #about {
+        /* 1. When a section is targeted, SHOW IT */
+        .hidden-section:target {
             max-height: 1000px;
             opacity: 1;
+            padding: 15px 15px;
+            margin-bottom: 20px;
             transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
-            padding-top: 15px;
         }
+
+        /* 2. When #projects is targeted, HIDE ITS SIBLINGS */
+        #projects:target ~ #about,
         
-        /* Floating Appearance (Apply to the content of the panels) */
+        /* 3. When #about is targeted, HIDE ITS SIBLINGS (which is only #projects in this case) */
+        #about:target ~ #projects {
+            /* Use the hidden state rules, but override the max-height/opacity from step 1 */
+            max-height: 0;
+            opacity: 0;
+            padding: 0 15px; 
+            margin-bottom: 0;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+
         .hidden-section h2 {
             font-family: var(--font-heading);
             font-size: 1.2em;
@@ -229,15 +231,10 @@
         .hidden-section p strong {
             color: var(--color-accent);
         }
-        
-        /* Floating Reset: Hide the border/padding when closed */
-        .hidden-section:not([style*="max-height: 1000px"]) {
-             border-top: none;
-        }
-        
+
 
         /* =================================
-           IV. GALLERY & LIGHTBOX (CSS-Only) - Not modified from last version
+           V. GALLERY & LIGHTBOX (CSS-Only) 
            ================================= */
         .gallery {
             display: grid;
@@ -259,7 +256,7 @@
             box-shadow: 0 0 10px rgba(0, 188, 212, 0.7);
         }
 
-        /* Lightbox - Hidden by default */
+        /* Lightbox (Remains :target based) */
         .lightbox-target {
             display: none;
             position: fixed;
@@ -311,7 +308,7 @@
             .contact-actions {
                 flex-wrap: wrap;
             }
-            .contact-actions label, .contact-actions a {
+            .contact-actions a {
                 flex-grow: 1;
                 max-width: 48%; /* Adjust for spacing */
             }
@@ -321,9 +318,6 @@
 <body>
     <div class="drawing-sheet">
 
-        <input type="radio" id="radio-projects" name="view-toggle" class="toggle-input">
-        <input type="radio" id="radio-about" name="view-toggle" class="toggle-input">
-        
         <div class="title-block">
             <img src="profile.jpg" alt="Heather Rosenau" class="profile-pic">
             <h1>Heather Rosenau</h1>
@@ -343,10 +337,10 @@
             <div class="contact-actions">
                 <a href="https://linkedin.com/in/heatherrosenau" target="_blank">LinkedIn</a>
                 
-                <label for="radio-projects">Projects</label>
-                <label for="radio-about">About Me</label>
+                <a href="#projects">Projects</a>
+                <a href="#about">About Me</a>
                 
-                <label for="close-view" style="background: none; border: 1px dashed rgba(0, 188, 212, 0.5); color: var(--color-accent); flex-grow: 0; max-width: 80px;">CLOSE</label>
+                <a href="#" style="background: none; border: 1px dashed rgba(0, 188, 212, 0.5); color: var(--color-accent); flex-grow: 0; max-width: 80px;">CLOSE</a>
             </div>
             
             <p>I am a highly detail-oriented **CAD professional** specializing in the transformation of conceptual designs into production-ready technical drawings and 3D models. My work ensures accuracy and manufacturability across diverse engineering and architectural domains.</p>
@@ -383,7 +377,7 @@
 
     <div id="lb1" class="lightbox-target">
         <div class="lightbox-content">
-            <a href="#" class="lightbox-close" title="Close">&times;</a>
+            <a href="#projects" class="lightbox-close" title="Close">&times;</a>
             <img src="project1.jpg" alt="Precision Gear Design - AutoCAD">
             <p class="caption">Precision Gear Design - AutoCAD</p>
         </div>
@@ -391,7 +385,7 @@
 
     <div id="lb2" class="lightbox-target">
         <div class="lightbox-content">
-            <a href="#" class="lightbox-close" title="Close">&times;</a>
+            <a href="#projects" class="lightbox-close" title="Close">&times;</a>
             <img src="project2.jpg" alt="3D Model Render - SolidWorks">
             <p class="caption">3D Model Render - SolidWorks</p>
         </div>
@@ -399,7 +393,7 @@
 
     <div id="lb3" class="lightbox-target">
         <div class="lightbox-content">
-            <a href="#" class="lightbox-close" title="Close">&times;</a>
+            <a href="#projects" class="lightbox-close" title="Close">&times;</a>
             <img src="project3.jpg" alt="Architectural Floor Plan - Revit">
             <p class="caption">Architectural Floor Plan - Revit</p>
         </div>
@@ -407,7 +401,7 @@
 
     <div id="lb4" class="lightbox-target">
         <div class="lightbox-content">
-            <a href="#" class="lightbox-close" title="Close">&times;</a>
+            <a href="#projects" class="lightbox-close" title="Close">&times;</a>
             <img src="project4.jpg" alt="Detailed Assembly View - Inventor">
             <p class="caption">Detailed Assembly View - Inventor</p>
         </div>
